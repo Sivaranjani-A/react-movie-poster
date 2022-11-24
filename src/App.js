@@ -97,7 +97,7 @@ function MovieList() {
         />
         <input
           onChange={(event) => setposter(event.target.value)}
-          placeholder="Movie Poster"
+          placeholder="Movie Poster URL"
         />
         <input
           onChange={(event) => setrating(event.target.value)}
