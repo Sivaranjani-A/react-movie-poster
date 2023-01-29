@@ -49,7 +49,7 @@ function App() {
             <Route path="/films" element={<Navigate replace to="/movies" />} />
             <Route path="/movies" element={<Movielist />} />
             <Route path="/addmovieform" element={<AddMovie />} />
-
+            <Route path="*" element={<NotFound />} />
             <Route path="/movies/edit/:id" element={<MovieEdit />} />
           </Routes>
         </div>
