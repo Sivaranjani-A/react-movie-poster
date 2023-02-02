@@ -13,7 +13,7 @@ import Paper from '@mui/material/Paper';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { MovieDetails } from './components/MovieDetails';
-import { Home } from './Home';
+import { Home } from './components/Home';
 import { NotFound } from './components/NotFound';
 import { MovieEdit } from './components/MovieEdit';
 
