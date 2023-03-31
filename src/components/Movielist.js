@@ -10,16 +10,27 @@ import { API } from '../global';
 export function Movielist() {
   const navigate = useNavigate();
   const [MovieList, setMovieList] = useState([]);
+  const token = localStorage.getItem("token");
   //refresh the data,so create a function
+
   const getMovies = () => {
-    fetch(`${API}/movies`, {
-      method: "GET"
-    })
-      .then(data => data.json())
-      .then(movies => setMovieList(movies));
+    if (token) {
+      fetch(`${API}/movies`, {
+        method: "GET"
+      })
+        .then(data => data.json())
+        .then(movies => setMovieList(movies));
+    }
+    else {
+      navigate("/")
+    }
   }
+
   //after App component is mounted
+
   useEffect(() => getMovies(), []);
+
+
   //deleteMovie
   const deleteMovie = (id) => {
     fetch(`${API}/movies/${id}`, {

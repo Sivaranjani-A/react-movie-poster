@@ -1,2 +1,2 @@
 
-export const API = "https://movieapp1.onrender.com"
+export const API = "http://localhost:4000"

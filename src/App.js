@@ -16,6 +16,14 @@ import { MovieDetails } from './components/MovieDetails';
 import { Home } from './components/Home';
 import { NotFound } from './components/NotFound';
 import { MovieEdit } from './components/MovieEdit';
+import { Login } from './components/login';
+import Register from './components/register';
+import { UserProvider } from './context/UserContext';
+import { ToastContainer } from 'react-toastify';
+import Activation from './components/Activation';
+import { Forgotpassword } from './components/forgotpassword';
+import Verification from './components/verification';
+import ChangePassword from './components/changepassword';
 
 
 
@@ -29,29 +37,50 @@ function App() {
       mode: mode,
     },
   });
+  const doLogout = () => {
+    if (window.confirm("Do you really want to Logout?")) {
+      try {
+        localStorage.removeItem('token');
+        localStorage.removeItem('email');
+        navigate('/');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 
-
+  const token = localStorage.getItem("token");
   return (
     <ThemeProvider theme={darkTheme}>
       <Paper style={{ minHeight: "100vh", borderRadius: "0" }} elevation={4}>
         <div className="App">
           <AppBar position="static">
             <Toolbar>
-              <Button onClick={() => navigate("/")} color="inherit">Home</Button>
+              <Button onClick={() => navigate("/home")} color="inherit">Home</Button>
               <Button onClick={() => navigate("/movies")} color="inherit">Movies</Button>
-              <Button onClick={() => navigate("/addmovieform")} color="inherit">Add Movie</Button>
+              {token ? <Button onClick={() => navigate("/addmovieform")} color="inherit">Add Movie</Button> : null}
               <Button sx={{ marginLeft: "auto" }} startIcon={mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />} onClick={() => setMode(mode === "light" ? "dark" : "light")} color="inherit">{mode === "light" ? "dark" : "light"} mode</Button>
+              {token ? <Button onClick={() => { doLogout() }} color="inherit">Logout</Button> : null}
             </Toolbar>
           </AppBar>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/movies/:id" element={<MovieDetails />} />
-            <Route path="/films" element={<Navigate replace to="/movies" />} />
-            <Route path="/movies" element={<Movielist />} />
-            <Route path="/addmovieform" element={<AddMovie />} />
-            <Route path="*" element={<NotFound />} />
-            <Route path="/movies/edit/:id" element={<MovieEdit />} />
-          </Routes>
+          <UserProvider>
+
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/user/activation/:userId" element={<Activation />} />
+              <Route path='/ForgotPassword' element={<Forgotpassword />} />
+              <Route path='/Verification' element={<Verification />} />
+              <Route path='/ChangePassword' element={<ChangePassword />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/movies/:id" element={<MovieDetails />} />
+              <Route path="/films" element={<Navigate replace to="/movies" />} />
+              <Route path="/movies" element={<Movielist />} />
+              <Route path="/addmovieform" element={<AddMovie />} />
+              <Route path="*" element={<NotFound />} />
+              <Route path="/movies/edit/:id" element={<MovieEdit />} />
+            </Routes>
+          </UserProvider>
         </div>
       </Paper>
     </ThemeProvider >
